@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSP Problems - Interactive Demo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Bài Toán Thỏa Mãn Ràng Buộc (CSP)</h1>
+        <p class="subtitle">TSP, Phân Công Công Việc & Tô Màu Đồ Thị</p>
+      </header>
+
+      <div class="tabs">
+        <div class="tab active" onclick="showTab('tsp')">🚗 Người Bán Hàng</div>
+        <div class="tab" onclick="showTab('job')">💼 Phân Công Công Việc</div>
+        <div class="tab" onclick="showTab('graph')">🎨 Tô Màu Đồ Thị</div>
+      </div>
+
+      <!-- TSP Content -->
+      <div id="tsp" class="content active">
+        <div class="panel full-width">
+          <h3>
+            📍 Bài Toán Người Bán Hàng (TSP - Travelling Salesman Problem)
+          </h3>
+          <div class="explanation">
+            <strong>Mô tả bài toán:</strong> Tìm chu trình ngắn nhất đi qua tất
+            cả các thành phố đúng một lần và quay về điểm xuất phát.
+            <br /><br />
+            <strong>Thuật toán sử dụng:</strong> Nearest Neighbor (Láng Giềng
+            Gần Nhất) - Thuật toán tham lam chọn thành phố gần nhất chưa đi qua
+            ở mỗi bước.
+          </div>
+        </div>
+
+        <div class="demo-grid">
+          <div class="panel">
+            <h3>Đồ Thị Các Thành Phố</h3>
+            <div class="canvas-container">
+              <canvas id="tspCanvas" width="600" height="400"></canvas>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Ma Trận Khoảng Cách (Km)</h3>
+            <div class="distance-matrix" id="distanceMatrix"></div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button onclick="resetTSP()">Làm Mới</button>
+          <button id="tspSolveBtn" onclick="solveTSP()">
+            Tìm Đường Đi Ngắn Nhất
+          </button>
+        </div>
+
+        <div class="panel">
+          <h3>Kết Quả</h3>
+          <div id="tspRoutes">
+            Nhấn "Tìm Đường Đi Ngắn Nhất" để xem quá trình giải!
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Giải Thích Chi Tiết Thuật Toán</h3>
+          <div id="tspExplanation"></div>
+        </div>
+      </div>
+
+      <!-- Phan cong cong viec Content -->
+      <div id="job" class="content">
+        <div class="panel full-width">
+          <h3>💼 Bài Toán Phân Công Công Việc (Job Assignment Problem)</h3>
+          <div class="explanation">
+            <strong>Mô tả bài toán:</strong> Phân công n công nhân cho n công
+            việc sao cho tổng chi phí là nhỏ nhất. Mỗi công nhân chỉ làm một
+            công việc và mỗi công việc chỉ được giao cho một người. <br /><br />
+            <strong>Thuật toán sử dụng:</strong> Hungarian Algorithm (Thuật Toán
+            Hungary) - Phương pháp tối ưu dựa trên lý thuyết đồ thị hai phía.
+          </div>
+        </div>
+
+        <div class="demo-grid">
+          <div class="panel">
+            <h3>Ma Trận Chi Phí</h3>
+            <div class="cost-matrix" id="costMatrix"></div>
+          </div>
+
+          <div class="panel">
+            <h3>Kết Quả Phân Công</h3>
+            <div id="jobResult">
+              Nhấn "Giải Bài Toán" để xem kết quả phân công nhoa!
+            </div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button onclick="randomizeMatrix()">Random</button>
+          <button id="jobSolveBtn" onclick="solveJobAssignment()">
+            Giải Bài Toán
+          </button>
+        </div>
+
+        <div class="panel">
+          <h3>Giải Thích Chi Tiết Thuật Toán</h3>
+          <div id="jobExplanation"></div>
+        </div>
+      </div>
+
+      <!-- Graph Coloring Content -->
+      <div id="graph" class="content">
+        <div class="panel full-width">
+          <h3>🎨 Bài Toán Tô Màu Đồ Thị (Graph Coloring Problem)</h3>
+          <div class="explanation">
+            <strong>Mô tả bài toán:</strong> Tô màu các đỉnh của đồ thị sao cho
+            hai đỉnh kề nhau không cùng màu. Ứng dụng: Lập lịch thi, phân bổ tần
+            số, tô màu bản đồ. <br /><br />
+            <strong>Thuật toán sử dụng:</strong> Greedy Coloring (Tô Màu Tham
+            Lam) - Duyệt qua từng đỉnh và gán màu nhỏ nhất chưa được sử dụng bởi
+            các đỉnh kề.
+          </div>
+        </div>
+
+        <div class="demo-grid">
+          <div class="panel">
+            <h3>Đồ Thị</h3>
+            <div class="canvas-container">
+              <canvas id="graphCanvas" width="600" height="400"></canvas>
+            </div>
+            <div class="color-legend" id="colorLegend"></div>
+          </div>
+
+          <div class="panel">
+            <h3>Bảng Ràng Buộc</h3>
+            <div class="edge-table" id="edgeTable"></div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button onclick="resetGraph()">Đồ Thị Mới</button>
+          <button id="graphSolveBtn" onclick="solveGraphColoring()">
+            Tô Màu Đồ Thị
+          </button>
+        </div>
+
+        <div class="panel">
+          <h3>Giải Thích Chi Tiết Thuật Toán</h3>
+          <div id="graphExplanation"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/script.js"></script>
+  </body>
+</html>
