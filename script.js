@@ -240,7 +240,7 @@ async function solveTSP() {
                 <p><strong>Chu trình:</strong> ${pathStr}</p>
                 <p><strong>Tổng khoảng cách:</strong> ${totalDist.toFixed(
                   2
-                )} đơn vị</p>
+                )} Km</p>
                 <div class="explanation" style="margin-top: 15px;">
                     <strong>Lưu ý:</strong> Thuật toán Nearest Neighbor là thuật toán tham lam, cho kết quả nhanh nhưng không đảm bảo luôn là tối ưu tuyệt đối. Với ${
                       cities.length
